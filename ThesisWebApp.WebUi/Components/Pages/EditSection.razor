@@ -1,0 +1,60 @@
+﻿@page "/edit/{SectionID:int}"
+@inject IProjectSectionRepository ProjectSectionRepository
+@inject NavigationManager NavigationManager
+
+<div>
+    <h3>Edit Section</h3>
+    @if (ProjectSection != null)
+    {
+        <EditForm Enhance="true" FormName="EditSectionForm" Model="ProjectSection" OnValidSubmit="EditSection2">
+            <div>
+                <label for="SectionID">Section ID:</label>
+                <InputNumber id="SectionID" @bind-Value="ProjectSection.SectionID" Disabled="true" />
+            </div>
+            <div>
+                <label for="ProjectID">Project ID:</label>
+                <InputNumber id="ProjectID" @bind-Value="ProjectSection.ProjectID" />
+            </div>
+            <div>
+                <label for="sectionName">Section Name:</label>
+                <InputText id="sectionName" @bind-Value="ProjectSection.SectionName" />
+            </div>
+            <div>
+                <label for="sheetName">Sheet Name:</label>
+                <InputText id="sheetName" @bind-Value="ProjectSection.SheetName" />
+            </div>
+            <div>
+                <label for="SortOrder">Sort Order:</label>
+                <InputNumber id="SortOrder" @bind-Value="ProjectSection.SortOrder" />
+            </div>
+            <div>
+                <button class="btn btn-primary shadow-none">
+                    Save Changes
+                </button>
+            </div>
+        </EditForm>
+    }
+    else
+    {
+        <p>Loading section details...</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int SectionID { get; set; }  
+
+    [SupplyParameterFromForm]
+    public ProjectSection? ProjectSection { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProjectSection ??= await ProjectSectionRepository.GetByIdAsync(SectionID);
+    }
+    private async Task EditSection2()
+    {
+        await ProjectSectionRepository.UpdateAsync(ProjectSection!);
+        NavigationManager.NavigateTo("/viewsections");
+    }
+
+}

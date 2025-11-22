@@ -27,4 +27,17 @@ public class ProjectSectionRepository : IProjectSectionRepository
         var projectSections = await _sandboxContext.ProjectSections.ToListAsync();
         return projectSections;
     }
+
+    public async Task<ProjectSection?> GetByIdAsync(int sectionId)
+    {
+        var section = await _sandboxContext.ProjectSections
+            .FirstOrDefaultAsync(ps => ps.SectionID == sectionId);
+        return section;
+    }
+
+    public async Task UpdateAsync(ProjectSection projectSection)
+    {
+        _sandboxContext.Entry(projectSection).State = EntityState.Modified;
+        await _sandboxContext.SaveChangesAsync();
+    }
 }

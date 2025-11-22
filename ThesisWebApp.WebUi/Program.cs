@@ -15,6 +15,7 @@ builder.Services.AddInfrastructureServices();
 builder.Services.AddDbContextFactory<SandboxContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IProjectSectionRepository, ProjectSectionRepository>();
 builder.Services.AddScoped<IComponentRepository, ComponentRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.22">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThesisWebApp.Application\ThesisWebApp.Application.csproj" />
     <ProjectReference Include="..\ThesisWebApp.Infrastructure\ThesisWebApp.Infrastructure.csproj" />
   </ItemGroup>
 

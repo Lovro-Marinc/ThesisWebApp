@@ -1,6 +1,10 @@
 using ThesisWebApp.WebUi.Components;
 using ThesisWebApp.Application;
 using ThesisWebApp.Infrastructure;
+using ThesisWebApp.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using ThesisWebApp.Application.Interfaces;
+using ThesisWebApp.Infrastructure.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +12,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
+builder.Services.AddDbContextFactory<SandboxContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IProjectSectionRepository, ProjectSectionRepository>();
+builder.Services.AddScoped<IComponentRepository, ComponentRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

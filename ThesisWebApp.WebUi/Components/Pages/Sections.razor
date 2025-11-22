@@ -1,0 +1,48 @@
+﻿@page "/sections"
+
+@inject IProjectSectionRepository projectSectionRepository 
+@inject NavigationManager NavigationManager
+<h3>Sections</h3>
+<PageTitle>
+    Add New Section
+</PageTitle>
+<div>   
+    <EditForm Enhance="true" FormName="AddSectionForm" OnValidSubmit="AddProjectSection" Model="projectSection">
+        <h3>Add new project section</h3>
+       @*  <div>
+            <label for="SectionID">Section ID:</label>
+            <InputNumber id="SectionID" @bind-Value="projectSection.SectionID" />
+        </div> *@
+        <div>
+            <label for="ProjectID">Project ID:</label>
+            <InputNumber id="ProjectID" @bind-Value="projectSection.ProjectID" />
+        </div>
+        <div>
+            <label for="sectionName">Section Name:</label>
+            <InputText id="sectionName" @bind-Value="projectSection.SectionName" />
+        </div>
+        <div>
+            <label for="sheetName">Sheet Name:</label>
+            <InputText id="sheetName" @bind-Value="projectSection.SheetName" />
+        </div>
+        <div>
+            <label for="SortOrder">Sort Order:</label>
+            <InputNumber id="SortOrder" @bind-Value="projectSection.ProjectID" />
+        </div>
+        <div>
+            <button class="btn btn-primary shadow-none">
+                Add Section
+            </button>
+        </div>
+    </EditForm>
+</div>
+@code {
+    private ProjectSection projectSection { get; set; } = new ();
+
+    private async Task AddProjectSection()
+    {
+        await projectSectionRepository.AddAsync(projectSection);
+        NavigationManager.NavigateTo("/");
+    }
+
+}

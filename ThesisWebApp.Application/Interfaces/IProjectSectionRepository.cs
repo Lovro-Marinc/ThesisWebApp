@@ -9,4 +9,5 @@ namespace ThesisWebApp.Application.Interfaces;
 public interface IProjectSectionRepository
 {
     Task AddAsync(ProjectSection projectSection);
+    Task<List<ProjectSection>> GetAllAsync();
 }

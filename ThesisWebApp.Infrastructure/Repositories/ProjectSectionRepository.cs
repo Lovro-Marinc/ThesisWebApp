@@ -16,8 +16,15 @@ public class ProjectSectionRepository : IProjectSectionRepository
     {
         _sandboxContext = sandboxContext.CreateDbContext();
     }
-    public Task AddAsync(ProjectSection projectSection)
+    public async Task AddAsync(ProjectSection projectSection)
     {
-        throw new NotImplementedException();
+        _sandboxContext.ProjectSections.Add(projectSection);
+        await _sandboxContext.SaveChangesAsync();
+    }
+
+    public async Task<List<ProjectSection>> GetAllAsync()
+    {
+        var projectSections = await _sandboxContext.ProjectSections.ToListAsync();
+        return projectSections;
     }
 }

@@ -1,0 +1,39 @@
+﻿@page "/viewsections";
+@inject IProjectSectionRepository projectSectionRepository;
+
+<h3>Project Sections</h3>
+<div>
+    @if(projectSections == null || projectSections.Count == 0)
+    {
+        <p>Loading...</p>
+    }
+    else if(projectSections.Any())
+    {
+        @foreach (var sectionItem in projectSections)
+        {
+            <div class="mb-3 p-3 border rounded">
+                <h5>@sectionItem.SectionName</h5>
+                <p>Sheet Name: @sectionItem.SheetName</p>
+                <p>Sort Order: @sectionItem.SortOrder</p>
+            </div>
+        }
+
+       
+    }
+    else
+    {
+        <div>
+            <a>No project sections available.</a>
+        </div>
+    }
+)
+</div>
+
+@code {
+    public List<ProjectSection> projectSections { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        projectSections = await projectSectionRepository.GetAllAsync();
+    }
+}

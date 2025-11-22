@@ -12,5 +12,6 @@ public interface IProjectSectionRepository
     Task<List<ProjectSection>> GetAllAsync();
     Task<ProjectSection?> GetByIdAsync(int sectionId);
     Task UpdateAsync(ProjectSection projectSection);
+    Task DeleteByIdAsync(int id);
 
 }

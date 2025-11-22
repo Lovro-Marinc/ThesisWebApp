@@ -22,6 +22,16 @@ public class ProjectSectionRepository : IProjectSectionRepository
         await _sandboxContext.SaveChangesAsync();
     }
 
+    public async Task DeleteByIdAsync(int id)
+    {
+        var section = await GetByIdAsync(id);
+        if (section != null)
+        {
+            _sandboxContext.ProjectSections.Remove(section);
+            await _sandboxContext.SaveChangesAsync();
+        }
+    }
+
     public async Task<List<ProjectSection>> GetAllAsync()
     {
         var projectSections = await _sandboxContext.ProjectSections.ToListAsync();

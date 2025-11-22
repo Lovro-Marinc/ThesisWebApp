@@ -19,6 +19,9 @@
             <a href=@($"/edit/{@sectionItem.SectionID}")>
                 Edit
             </a>
+            <button @onclick="() => DeleteSection(sectionItem.SectionID)">
+                Delete
+            </button>
         }
 
        
@@ -38,5 +41,9 @@
     protected override async Task OnInitializedAsync()
     {
         projectSections = await projectSectionRepository.GetAllAsync();
+    }
+    protected async Task DeleteSection(int id)
+    {
+        await projectSectionRepository.DeleteByIdAsync(id);
     }
 }

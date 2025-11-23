@@ -17,17 +17,9 @@ public class ProjectRepository : IProjectRepository
     {
         _sandboxContext = sandboxContext.CreateDbContext();
     }
-    private Project? _selectedProject;
-
-    public Project? SelectedProject => _selectedProject;
 
     public event Action? OnSelectedProjectChanged;
 
-    public void SetSelectedProject(Project project)
-    {
-        _selectedProject = project;
-        OnSelectedProjectChanged?.Invoke();
-    }
 
     public async Task<List<Project>> GetAllAsync()
     {

@@ -1,13 +1,21 @@
 ﻿@page "/"
+@using ThesisWebApp.WebUi.State
 @inject IProjectRepository ProjectRepo
+@inject SelectionService ss
 @implements IDisposable
-<h2>
-    Current project @(ProjectRepo.SelectedProject?.ProjectName ?? "None")
-</h2>
+
+<h2>Current project</h2>
+@if (currentProject != null)
+{
+    <div class="current-project">
+        Selected: @currentProject.ProjectID
+    </div>
+}
+
 <div class="project-list">
     @foreach (var project in availableProjects)
     {
-        <div class="project-item @(project.ProjectID == ProjectRepo.SelectedProject?.ProjectID ? "selected" : "")"
+        <div class="project-item @(project.ProjectID == currentProject?.ProjectID ? "selected" : "")"
              @onclick="() => SelectProject(project)">
             @project.ProjectID
         </div>
@@ -16,20 +24,31 @@
 
 @code {
     private List<Project> availableProjects = new();
+    private Project? currentProject;
 
     protected override async Task OnInitializedAsync()
     {
         availableProjects = await ProjectRepo.GetAllAsync();
-        ProjectRepo.OnSelectedProjectChanged += StateHasChanged;
+        currentProject = ss.SelectedProject;
+
+        // Subscribe to changes
+        ss.OnSelectedProjectChanged += OnProjectChanged;
     }
 
     private void SelectProject(Project project)
     {
-        ProjectRepo.SetSelectedProject(project);
+        ss.SetSelectedProject(project);
+    }
+
+    private void OnProjectChanged()
+    {
+        currentProject = ss.SelectedProject;
+        StateHasChanged(); // Force UI refresh
     }
 
     public void Dispose()
     {
-        ProjectRepo.OnSelectedProjectChanged -= StateHasChanged;
+        // Important: unsubscribe to prevent memory leaks
+        ss.OnSelectedProjectChanged -= OnProjectChanged;
     }
 }

@@ -45,6 +45,14 @@ public class ProjectSectionRepository : IProjectSectionRepository
         return section;
     }
 
+    public async Task<List<ProjectSection>> GetByProjectIdAsync(int projectId)
+    {
+        var section = await _sandboxContext.ProjectSections
+            .Where(ps => ps.ProjectID == projectId)
+            .ToListAsync();
+        return section;
+    }
+
     public async Task UpdateAsync(ProjectSection projectSection)
     {
         _sandboxContext.Entry(projectSection).State = EntityState.Modified;

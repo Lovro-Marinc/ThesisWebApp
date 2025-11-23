@@ -1,4 +1,5 @@
 using ThesisWebApp.WebUi.Components;
+using ThesisWebApp.WebUi.State;
 using ThesisWebApp.Application;
 using ThesisWebApp.Infrastructure;
 using ThesisWebApp.Infrastructure.Data;
@@ -16,6 +17,7 @@ builder.Services.AddDbContextFactory<SandboxContext>(options => options.UseSqlSe
 builder.Services.AddScoped<IProjectSectionRepository, ProjectSectionRepository>();
 builder.Services.AddScoped<IComponentRepository, ComponentRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddSingleton<SelectionService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

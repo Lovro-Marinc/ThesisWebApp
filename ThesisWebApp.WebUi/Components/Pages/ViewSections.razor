@@ -1,6 +1,7 @@
 ﻿@page "/viewsections";
 @inject IProjectSectionRepository projectSectionRepository;
-
+@using ThesisWebApp.WebUi.State;
+@inject SelectionService ss;
 <h3>Project Sections</h3>
 <div>
     @if(projectSections == null || projectSections.Count == 0)
@@ -40,7 +41,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        projectSections = await projectSectionRepository.GetAllAsync();
+        if (ss.SelectedProject != null)
+            projectSections = await projectSectionRepository.GetByProjectIdAsync(ss.SelectedProject.ProjectID);
+        else
+        {
+            projectSections = new List<ProjectSection>();
+        }
+        
     }
     protected async Task DeleteSection(int id)
     {

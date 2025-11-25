@@ -40,10 +40,14 @@
         ss.SetSelectedProject(project);
     }
 
-    private void OnProjectChanged()
+    private async void OnProjectChanged()
     {
-        currentProject = ss.SelectedProject;
-        StateHasChanged(); // Force UI refresh
+        await InvokeAsync(() =>
+        {
+            currentProject = ss.SelectedProject;
+            StateHasChanged();
+        });
+    
     }
 
     public void Dispose()

@@ -1,7 +1,9 @@
 ﻿@page "/"
 @using ThesisWebApp.WebUi.State
 @inject IProjectRepository ProjectRepo
+@inject IExcelExport excelExport
 @inject SelectionService ss
+@inject NavigationManager Nav
 @implements IDisposable
 
 <h2>Current project</h2>
@@ -21,7 +23,14 @@
         </div>
     }
 </div>
-
+<div>
+    <h1>
+        Download
+    </h1>
+    <botton onclick="@DownloadFile">
+        button
+    </botton>
+</div>
 @code {
     private List<Project> availableProjects = new();
     private Project? currentProject;
@@ -34,16 +43,28 @@
         // Subscribe to changes
         ss.OnSelectedProjectChanged += OnProjectChanged;
     }
+    private async Task DownloadFile()
+    {
+        var bytes = excelExport.ExportReport();
+        var base64 = Convert.ToBase64String(bytes);
+        var url = "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + base64;
 
+        // Navigate to force browser download
+        Nav.NavigateTo(url, forceLoad: true);
+        
+    
+        // Logic to download the file
+    }
     private void SelectProject(Project project)
     {
         ss.SetSelectedProject(project);
     }
-
+    
     private async void OnProjectChanged()
     {
-        await InvokeAsync(() =>
+        await InvokeAsync(() =>//https://stackoverflow.com/questions/56477829/how-to-fix-the-current-thread-is-not-associated-with-the-renderers-synchroniza
         {
+            
             currentProject = ss.SelectedProject;
             StateHasChanged();
         });

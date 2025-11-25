@@ -1,13 +1,18 @@
-using ThesisWebApp.WebUi.Components;
-using ThesisWebApp.WebUi.State;
+using GemBox.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
 using ThesisWebApp.Application;
+using ThesisWebApp.Application.Interfaces;
 using ThesisWebApp.Infrastructure;
 using ThesisWebApp.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using ThesisWebApp.Application.Interfaces;
+using ThesisWebApp.Infrastructure.Services;
 using ThesisWebApp.Infrastructure.Repositories;
+using ThesisWebApp.WebUi.Components;
+using ThesisWebApp.WebUi.State;
+
 var builder = WebApplication.CreateBuilder(args);
 
+
+SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -18,6 +23,7 @@ builder.Services.AddScoped<IProjectSectionRepository, ProjectSectionRepository>(
 builder.Services.AddScoped<IComponentRepository, ComponentRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddSingleton<SelectionService>();
+builder.Services.AddTransient<IExcelExport, ExcelExport>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

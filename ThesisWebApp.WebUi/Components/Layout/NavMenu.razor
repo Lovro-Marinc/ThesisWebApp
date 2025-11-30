@@ -12,7 +12,7 @@
     private void SelectedItemChangedHandler(DrawerItem item)
     {
         selectedItem = item;
-        //yrdy 
+       
        
         if(item.Text == "Menu")
         {
@@ -32,8 +32,8 @@
         new DrawerItem { Separator = true },
         new DrawerItem { Text = "Home", Url = "/", Icon = SvgIcon.Home },
         
-        new DrawerItem { Text = "Counter", Url = "counter", Icon = SvgIcon.PlusOutline },
-        new DrawerItem { Text = "FetchData", Url = "fetchdata", Icon = SvgIcon.Grid }
+        new DrawerItem { Text = "Edit", Url = "counter", Icon = SvgIcon.EditTools },
+        new DrawerItem { Text = "Export", Url = "fetchdata", Icon = SvgIcon.Export }
     };
 
     public class DrawerItem

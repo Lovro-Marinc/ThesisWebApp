@@ -1,0 +1,16 @@
+﻿@using Telerik.Blazor.Components
+@using ThesisWebApp.WebUi.State
+
+<TelerikComboBox Data="@Projects"
+                 TextField="@nameof(Project.ProjectName)"
+                 ValueField="@nameof(Project.ProjectID)"
+                 @bind-Value="ComboBoxValue">
+</TelerikComboBox>
+
+@code {
+    [Parameter]
+    public List<Project> Projects { get; set; } = new();
+
+    // The value selected (will be the ProjectName string based on ValueField above)
+    private string ComboBoxValue { get; set; }
+}

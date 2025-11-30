@@ -19,8 +19,4 @@
     <ProjectReference Include="..\ThesisWebApp.Infrastructure\ThesisWebApp.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\Pages\Home\" />
-  </ItemGroup>
-
 </Project>

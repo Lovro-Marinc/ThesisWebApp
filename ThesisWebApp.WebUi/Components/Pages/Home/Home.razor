@@ -1,0 +1,19 @@
+﻿@page "/"
+@using Telerik.Blazor.Components
+@using ThesisWebApp.WebUi.State
+@inject IProjectRepository ProjectRepo
+<TelerikRootComponent>
+    <ComboBox Projects="Projects"></ComboBox>
+</TelerikRootComponent>
+
+
+@code {
+    public List<Project> Projects { get; set; } = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Projects = await ProjectRepo.GetAllAsync();
+      
+    }
+}
